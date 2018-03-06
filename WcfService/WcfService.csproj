@@ -70,11 +70,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CalculatorService.svc" />
+    <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalculatorService.svc.cs">
       <DependentUpon>CalculatorService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Config\Bootstrap.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="ICalculatorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
