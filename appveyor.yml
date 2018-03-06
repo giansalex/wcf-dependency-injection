@@ -4,8 +4,8 @@ before_build:
   - nuget restore
 
 test:
-	assemblies:
-		- '**\*.Tests.dll'
+  assemblies:
+    - '**\*.Tests.dll'
 
 build:
   project: WcfServiceDI.sln
