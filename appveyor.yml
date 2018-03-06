@@ -3,6 +3,10 @@ configuration: Release
 before_build:
   - nuget restore
 
+test:
+assemblies:
+- '**\*.Tests.dll'
+
 build:
   project: WcfServiceDI.sln
   verbosity: minimal
