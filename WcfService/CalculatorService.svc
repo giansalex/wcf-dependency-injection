@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Service="WcfService.ICalculatorService, WcfService" Factory="Autofac.Integration.Wcf.AutofacServiceHostFactory, Autofac.Integration.Wcf" %>
