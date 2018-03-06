@@ -9,7 +9,10 @@ namespace WcfService.Config
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<CalculatorService>();
+            builder
+                .RegisterType<CalculatorService>()
+                 .As<ICalculatorService>();
+
             builder
                 .RegisterType<SumOperation>()
                 .As<IOperation>()
