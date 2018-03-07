@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using System.Threading.Tasks;
 
 namespace WcfService.Services
 {
@@ -8,8 +9,6 @@ namespace WcfService.Services
     {
 
         [OperationContract]
-        int Operation(int a, int b);
-
-        // TODO: Add your service operations here
+        Task<int> Operation(int a, int b);
     }
 }

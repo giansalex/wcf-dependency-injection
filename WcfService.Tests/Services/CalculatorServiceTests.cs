@@ -17,8 +17,8 @@ namespace WcfService.Tests.Services
         {
             var service = CreateAdd();
 
-            Assert.AreEqual(5, service.Operation(2, 3));
-            Assert.AreNotEqual(4, service.Operation(1, 2));
+            Assert.AreEqual(5, service.Operation(2, 3).Result);
+            Assert.AreNotEqual(4, service.Operation(1, 2).Result);
         }
 
         [Test]
@@ -26,7 +26,7 @@ namespace WcfService.Tests.Services
         {
             var service = CreateSubstract();
 
-            Assert.AreEqual(3, service.Operation(5, 2));
+            Assert.AreEqual(3, service.Operation(5, 2).Result);
         }
 
         [Test, TestCaseSource("Numbers")]
@@ -34,7 +34,7 @@ namespace WcfService.Tests.Services
         {
             var service = CreateMultiply();
 
-            Assert.AreEqual(a * b, service.Operation(a, b));
+            Assert.AreEqual(a * b, service.Operation(a, b).Result);
         }
 
 
@@ -43,7 +43,7 @@ namespace WcfService.Tests.Services
         {
             var service = CreatePow();
 
-            Assert.AreEqual(1, service.Operation(1, 2));
+            Assert.AreEqual(1, service.Operation(1, 2).Result);
         }
     }
 }
