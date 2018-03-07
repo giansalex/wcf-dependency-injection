@@ -2,15 +2,15 @@ configuration: Release
 
 before_build:
  - nuget restore
+ - choco install opencover.portable
+ - choco install codecov
+ - choco install nunit-console.portable
 
 build_script:
  - msbuild /verbosity:quiet "WcfServiceDI.sln"
 
 test_script:
- - .\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:".\packages\NUnit.ConsoleRunner.3.8.0\tools\nunit3-console.exe" -targetargs:"/nologo .\WcfService.Tests\bin\Release\WcfService.Tests.dll /noshadow" -output:"coverage.xml"
+ - OpenCover.Console.exe -register:user -target:".\nunit3-console.exe" -targetargs:".\WcfService.Tests\bin\Release\WcfService.Tests.dll" -output:"coverage.xml"
 
 after_test:
-  - ps: |
-      $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
-      Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
-      bash codecov.sh -f "coverage.xml" -t %UploadToken%
+  - codecov -f "coverage.xml" -t %UploadToken%
