@@ -1,5 +1,7 @@
 ﻿using WcfService.Handler;
 using WcfService.Behaviour;
+using System;
+using System.Threading.Tasks;
 
 namespace WcfService.Services
 {
@@ -15,9 +17,11 @@ namespace WcfService.Services
             _operation = operation;
         }
 
-        public int Operation(int a, int b)
+        public Task<int> Operation(int a, int b)
         {
-            return _operation.Execute(a, b);
+            return Task
+                .Factory
+                .StartNew(() => _operation.Execute(a, b));
         }
     }
 }
