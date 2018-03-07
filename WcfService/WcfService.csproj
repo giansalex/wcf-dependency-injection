@@ -49,6 +49,10 @@
       <HintPath>..\packages\Autofac.Wcf.4.0.0\lib\net45\Autofac.Integration.Wcf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -74,6 +78,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviour\ServiceErrorBehaviourAttribute.cs" />
+    <Compile Include="Handler\ElmahErrorHandler.cs" />
     <Compile Include="Services\CalculatorService.svc.cs">
       <DependentUpon>CalculatorService.svc</DependentUpon>
     </Compile>
@@ -88,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="App_Readme\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
