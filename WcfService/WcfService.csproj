@@ -79,6 +79,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviour\ServiceErrorBehaviourAttribute.cs" />
+    <Compile Include="Handler\HttpErrorHandler.cs" />
     <Compile Include="Services\CalculatorService.svc.cs">
       <DependentUpon>CalculatorService.svc</DependentUpon>
     </Compile>
