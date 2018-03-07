@@ -19,10 +19,12 @@ namespace WcfService.Behaviour
 
         public void Validate(ServiceDescription description, ServiceHostBase serviceHostBase)
         {
+            // Not Required
         }
 
         public void AddBindingParameters(ServiceDescription description, ServiceHostBase serviceHostBase, Collection<ServiceEndpoint> endpoints, BindingParameterCollection parameters)
         {
+            // Not Required
         }
 
         public void ApplyDispatchBehavior(ServiceDescription description, ServiceHostBase serviceHostBase)

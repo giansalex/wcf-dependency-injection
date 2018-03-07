@@ -12,11 +12,11 @@ namespace WcfService.Services
             return a + b;
         }
 
-        private void EnsuerNotZero(int value)
+        private static void EnsuerNotZero(int value)
         {
             if (value == 0)
             {
-                throw new Exception(Resources.Exception_Message_NotAllowedZero);
+                throw new ArgumentException(Resources.Exception_Message_NotAllowedZero);
             }
         }
     }
