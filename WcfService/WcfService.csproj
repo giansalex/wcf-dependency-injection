@@ -97,10 +97,7 @@
     <Compile Include="Operations\IOperation.cs" />
     <Compile Include="Operations\SumOperation.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="App_Readme\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
