@@ -2,10 +2,11 @@
 using System;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Dispatcher;
+using System.Web;
 
 namespace WcfService.Handler
 {
-    public class HttpErrorHandler : IErrorHandler
+    public class ElmahErrorHandler : IErrorHandler
     {
         public bool HandleError(Exception error)
         {
@@ -14,9 +15,12 @@ namespace WcfService.Handler
 
         public void ProvideFault(Exception error, MessageVersion version, ref Message fault)
         {
-            if (error == null) return;
+            if (error == null || HttpContext.Current == null)
+            {
+                return;
+            }
 
-            ErrorLog.GetDefault(null).Log(new Error(error));
+            ErrorSignal.FromCurrentContext().Raise(error);
         }
     }
 }

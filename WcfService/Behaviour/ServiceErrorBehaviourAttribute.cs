@@ -8,7 +8,7 @@ using System.ServiceModel.Dispatcher;
 
 namespace WcfService.Behaviour
 {
-    public class ServiceErrorBehaviourAttribute : Attribute
+    public class ServiceErrorBehaviourAttribute : Attribute, IServiceBehavior
     {
         readonly Type _errorHandlerType;
 

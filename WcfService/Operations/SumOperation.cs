@@ -6,11 +6,17 @@ namespace WcfService.Services
     {
         public int Execute(int a, int b)
         {
-            if (a == 0)
-            {
-                throw new Exception("bad parameters");
-            }
+            EnsuerNotZero(b);
+
             return a + b;
+        }
+
+        private void EnsuerNotZero(int value)
+        {
+            if (value == 0)
+            {
+                throw new Exception("No allow zero for second parameter");
+            }
         }
     }
 }

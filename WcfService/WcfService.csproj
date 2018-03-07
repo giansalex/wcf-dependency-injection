@@ -73,14 +73,13 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Services\CalculatorService.svc" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviour\ServiceErrorBehaviourAttribute.cs" />
-    <Compile Include="Handler\HttpErrorHandler.cs" />
+    <Compile Include="Handler\ElmahErrorHandler.cs" />
     <Compile Include="Services\CalculatorService.svc.cs">
       <DependentUpon>CalculatorService.svc</DependentUpon>
     </Compile>
@@ -95,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="App_Readme\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
