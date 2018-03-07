@@ -1,12 +1,16 @@
 configuration: Release
 
 before_build:
-  - nuget restore
+ - nuget restore
 
-test:
-  assemblies:
-    - '**\*.Tests.dll'
+build_script:
+ - msbuild /verbosity:quiet "WcfServiceDI.sln"
 
-build:
-  project: WcfServiceDI.sln
-  verbosity: minimal
+test_script:
+ - .\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"nunit3-console" -targetargs:".\WcfService.Tests\bin\Release\WcfService.Tests.dll /noshadow" -output:"coverage.xml"
+
+after_test:
+  - ps: |
+      $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
+      Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
+      bash codecov.sh -f "coverage.xml" -t %UploadToken%
