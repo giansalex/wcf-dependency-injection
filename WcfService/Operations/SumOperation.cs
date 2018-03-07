@@ -1,4 +1,5 @@
 ﻿using System;
+using WcfService.Properties;
 
 namespace WcfService.Services
 {
@@ -15,7 +16,7 @@ namespace WcfService.Services
         {
             if (value == 0)
             {
-                throw new Exception("No allow zero for second parameter");
+                throw new Exception(Resources.Exception_Message_NotAllowedZero);
             }
         }
     }
