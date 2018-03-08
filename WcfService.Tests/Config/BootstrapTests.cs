@@ -1,20 +1,46 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WcfService.Config;
+using Autofac;
+using WcfService.Services;
+using System;
+using Autofac.Core.Registration;
 
 namespace WcfService.Tests.Config
 {
     [TestFixture]
     public class BootstrapTests
     {
-        [Test]
-        public void SuccessResolve()
+        private IContainer _container;
+
+        [SetUp]
+        public void Init()
         {
-            var container = Bootstrap.Execute();
+            _container = Bootstrap.Execute();
+        }
+
+        [Test, TestCaseSource(nameof(GetArguments))]
+        public void SuccessResolve(Type abstaction, Type implement)
+        {
+            var instance = _container.Resolve(abstaction);
+
+            Assert.IsNotNull(instance);
+            Assert.IsInstanceOf(implement, instance);
+        }
+
+
+        [Test]
+        public void ErrorResolve()
+        {
+            Assert.Throws<ComponentNotRegisteredException>(() => _container.Resolve<BootstrapTests>());
+        }
+
+        public static object[] GetArguments()
+        {
+            return new[]
+            {
+                new object[] { typeof(IOperation), typeof(SumOperation) },
+                new object[] { typeof(ICalculatorService), typeof(CalculatorService) }
+            };
         }
     }
 }
