@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfService", "WcfService\Wc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfService.Tests", "WcfService.Tests\WcfService.Tests.csproj", "{E80E3180-F530-473F-95F5-3A2C7FCC4202}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{21A935D7-65AE-465C-A6FC-012EDDC71DA1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4BEBBDF7-E33B-4610-80D8-26AF5A9E8ACB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D9FFD2A1-4506-4036-AA0C-E37A82AE6757} = {21A935D7-65AE-465C-A6FC-012EDDC71DA1}
+		{E80E3180-F530-473F-95F5-3A2C7FCC4202} = {4BEBBDF7-E33B-4610-80D8-26AF5A9E8ACB}
 	EndGlobalSection
 EndGlobal

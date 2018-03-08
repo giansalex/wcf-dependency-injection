@@ -1,12 +1,16 @@
 configuration: Release
 
 before_build:
-  - nuget restore
+ - nuget restore
+ - choco install opencover.portable
+ - choco install codecov
+ - choco install nunit-console.portable
 
-test:
-  assemblies:
-    - '**\*.Tests.dll'
+build_script:
+ - msbuild /verbosity:quiet "WcfServiceDI.sln"
 
-build:
-  project: WcfServiceDI.sln
-  verbosity: minimal
+test_script:
+ - OpenCover.Console.exe -register:user -target:".\nunit3-console.exe" -targetargs:".\WcfService.Tests\bin\Release\WcfService.Tests.dll" -output:"coverage.xml"
+
+after_test:
+  - codecov -f "coverage.xml" -t %UploadToken%
