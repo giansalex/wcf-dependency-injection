@@ -10,7 +10,7 @@ build_script:
  - msbuild /verbosity:quiet "WcfServiceDI.sln"
 
 test_script:
- - OpenCover.Console.exe -register:user -target:".\nunit3-console.exe" -targetargs:".\WcfService.Tests\bin\Release\WcfService.Tests.dll" -output:"coverage.xml" -filter:"+[WcfService*]* -[WcfService.Tests*]*"
+ - OpenCover.Console.exe -register:user -target:".\nunit3-console.exe" -targetargs:".\WcfService.Tests\bin\Release\WcfService.Tests.dll" -output:"coverage.xml" -filter:"+[WcfService*]* -[WcfService]WcfService.Properties.* -[WcfService.Tests*]*"
 
 after_test:
   - codecov -f "coverage.xml" -t %UploadToken%

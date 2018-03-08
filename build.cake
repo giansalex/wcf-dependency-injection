@@ -74,6 +74,7 @@ Task("Run-Unit-Tests")
     new FilePath(pathCoverage),
     new OpenCoverSettings()
     .WithFilter("+[WcfService]*")
+	.WithFilter("-[WcfService]WcfService.Properties.*")
     .WithFilter("-[WcfService.Tests]*"));
 
 });
