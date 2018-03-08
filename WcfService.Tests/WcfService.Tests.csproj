@@ -59,6 +59,7 @@
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.4.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
       <Private>True</Private>
@@ -67,6 +68,7 @@
       <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -80,6 +82,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Config\BootstrapTests.cs" />
+    <Compile Include="Handler\ElmahErrorHandlerTests.cs" />
     <Compile Include="Operations\SumOperationTests.cs" />
     <Compile Include="Services\CalculatorServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
