@@ -11,6 +11,7 @@ WCF Application Guide
 - Dependency Injection (Autofac)
 - Error Logging (Elmah)
 - Unit Test (Nunit)
+- BDD (MSpec)
 - Mocking  (Moq)
 - Code Coverage (OpenCover)
 - Continuous Integration (Appveyor)

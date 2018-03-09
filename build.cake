@@ -1,6 +1,7 @@
 #tool "nuget:?package=NUnit.ConsoleRunner"
 #tool "nuget:?package=OpenCover"
 #tool "nuget:?package=ReportGenerator"
+#tool "nuget:?package=Machine.Specifications.runner.console"
 #tool "nuget:?package=ReportUnit"
 #addin Cake.VsMetrics
 // #addin "Cake.CodeAnalysisReporting"
@@ -99,9 +100,17 @@ Task("Run-Unit-Tests")
     new FilePath(pathCoverage),
     new OpenCoverSettings()
     .WithFilter("+[WcfService]*")
-	.WithFilter("-[WcfService]WcfService.Properties.*")
+	  .WithFilter("-[WcfService]WcfService.Properties.*")
     .WithFilter("-[WcfService.Tests]*"));
 });
+
+Task("Run-Spec-Tests")
+    .IsDependentOn("Build")
+    .Does(() => {
+        var testAssemblies = GetFiles("./WcfService.Specs/bin/" + configuration + "/*.Specs.dll");
+
+        MSpec(testAssemblies);
+    });
 
 Task("Reporting")
     .IsDependentOn("Run-Unit-Tests")
