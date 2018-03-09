@@ -1,6 +1,7 @@
 #tool "nuget:?package=NUnit.ConsoleRunner"
 #tool "nuget:?package=OpenCover"
 #tool "nuget:?package=ReportGenerator"
+#tool "nuget:?package=ReportUnit"
 
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -15,7 +16,7 @@ var configuration = Argument("configuration", "Release");
 
 var solutionPath = "";
 var pathCoverage = File("./coverage.xml");
-var reportOutput = Directory(System.IO.Path.GetTempPath()) + Directory("report-coverage");
+var tempDir = Directory(System.IO.Path.GetTempPath());
 
 ///////////////////////////////////////////////////////////////////////////////
 // TASKS
@@ -76,25 +77,34 @@ Task("Run-Unit-Tests")
     .WithFilter("+[WcfService]*")
 	.WithFilter("-[WcfService]WcfService.Properties.*")
     .WithFilter("-[WcfService.Tests]*"));
-
 });
 
 Task("Reporting")
     .IsDependentOn("Run-Unit-Tests")
     .Does(() =>
 {
+    var reportOutput = tempDir + Directory("report-coverage");
+    var unitTestOutput = tempDir + Directory("unit-test");
+
     ReportGenerator(pathCoverage, reportOutput);
+    ReportUnit(Directory("./"), unitTestOutput, new ReportUnitSettings());
 
-    var indexFile = reportOutput + File("index.htm");
+    var rerpotIndexFile = reportOutput + File("index.htm");
+    var unitTestIndexFile = unitTestOutput + File("Index.html");
 
-    if (FileExists(indexFile))
-    {
-        System.Diagnostics.Process.Start(indexFile);
-    }
-    else
-    {
-        Warning("Index Report not found");
-    }
+    Action<string> startPage = url => {
+        if (FileExists(url))
+        {
+            System.Diagnostics.Process.Start(url);
+        }
+        else
+        {
+            Warning("Index Report not found");
+        }
+    };
+
+    startPage(rerpotIndexFile);
+    startPage(unitTestIndexFile);
 });
 
 //////////////////////////////////////////////////////////////////////
