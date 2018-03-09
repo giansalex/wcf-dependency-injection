@@ -2,6 +2,9 @@
 #tool "nuget:?package=OpenCover"
 #tool "nuget:?package=ReportGenerator"
 #tool "nuget:?package=Machine.Specifications.runner.console"
+#tool "nuget:?package=ReportUnit"
+#addin Cake.VsMetrics
+// #addin "Cake.CodeAnalysisReporting"
 
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -16,7 +19,7 @@ var configuration = Argument("configuration", "Release");
 
 var solutionPath = "";
 var pathCoverage = File("./coverage.xml");
-var reportOutput = Directory(System.IO.Path.GetTempPath()) + Directory("report-coverage");
+var tempDir = Directory(System.IO.Path.GetTempPath());
 
 ///////////////////////////////////////////////////////////////////////////////
 // TASKS
@@ -42,6 +45,11 @@ Task("Clean")
     MSBuild(solutionPath, settings =>
         settings.SetConfiguration(configuration)
         .WithTarget("Clean"));
+    
+    // CreateMsBuildCodeAnalysisReport(
+    //     "./msbuild.log",
+    //     CodeAnalysisReport.MsBuildXmlFileLoggerByAssembly,
+    //     "./msbuild_output.html");
 });
 
 Task("Restore-NuGet-Packages")
@@ -56,8 +64,25 @@ Task("Build")
     .Does(() =>
 {
     MSBuild(solutionPath, settings =>
-        settings.SetConfiguration(configuration));
+        settings.SetConfiguration(configuration)
+        .AddFileLogger(new MSBuildFileLogger
+        {
+            Encoding = "UTF-8"
+        }));
 });
+
+Task("vs-metrics")
+    .IsDependentOn("Build")
+    .Does(() => {
+        var projects = GetFiles("./WcfService/bin/WcfService.dll");
+        var settings = new VsMetricsSettings()
+        {
+            SuccessFile = true,
+            IgnoreGeneratedCode = true
+        };
+
+        VsMetrics(projects, "./metrics_result.xml", settings);
+    });
 
 Task("Run-Unit-Tests")
     .IsDependentOn("Build")
@@ -75,8 +100,8 @@ Task("Run-Unit-Tests")
     new FilePath(pathCoverage),
     new OpenCoverSettings()
     .WithFilter("+[WcfService]*")
+	  .WithFilter("-[WcfService]WcfService.Properties.*")
     .WithFilter("-[WcfService.Tests]*"));
-
 });
 
 Task("Run-Spec-Tests")
@@ -91,18 +116,28 @@ Task("Reporting")
     .IsDependentOn("Run-Unit-Tests")
     .Does(() =>
 {
+    var reportOutput = tempDir + Directory("report-coverage");
+    var unitTestOutput = tempDir + Directory("unit-test");
+
     ReportGenerator(pathCoverage, reportOutput);
+    ReportUnit(Directory("./"), unitTestOutput, new ReportUnitSettings());
 
-    var indexFile = reportOutput + File("index.htm");
+    var rerpotIndexFile = reportOutput + File("index.htm");
+    var unitTestIndexFile = unitTestOutput + File("Index.html");
 
-    if (FileExists(indexFile))
-    {
-        System.Diagnostics.Process.Start(indexFile);
-    }
-    else
-    {
-        Warning("Index Report not found");
-    }
+    Action<string> startPage = url => {
+        if (FileExists(url))
+        {
+            System.Diagnostics.Process.Start(url);
+        }
+        else
+        {
+            Warning("Index Report not found");
+        }
+    };
+
+    startPage(rerpotIndexFile);
+    startPage(unitTestIndexFile);
 });
 
 //////////////////////////////////////////////////////////////////////

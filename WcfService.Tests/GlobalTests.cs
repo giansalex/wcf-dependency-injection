@@ -11,12 +11,12 @@ namespace WcfService.Tests
         public void Start()
         {
             var method = typeof(Global).GetMethod("Application_Start",
-                        BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.DeclaredOnly);
+                        BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 
             Assert.NotNull(method);
             Assert.Null(AutofacHostFactory.Container);
 
-            method.Invoke(null, new object[] { null, null});
+            method.Invoke(new Global(), new object[] { null, null});
 
             Assert.NotNull(AutofacHostFactory.Container);
         }
