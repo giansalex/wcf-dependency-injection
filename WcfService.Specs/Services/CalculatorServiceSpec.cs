@@ -5,8 +5,8 @@ using FluentAssertions;
 
 namespace WcfService.Specs.Services
 {
-    [Subject("Operation")]
-    public abstract class CalculatorServiceSpec
+    [Subject(typeof(CalculatorService))]
+    public class CalculatorServiceSpec
     {
         Establish context = () => {
             var mock = new Mock<IOperation>();
