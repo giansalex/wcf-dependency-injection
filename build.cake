@@ -2,6 +2,7 @@
 #tool "nuget:?package=OpenCover"
 #tool "nuget:?package=ReportGenerator"
 #tool "nuget:?package=ReportUnit"
+#addin Cake.VsMetrics
 // #addin "Cake.CodeAnalysisReporting"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -68,6 +69,19 @@ Task("Build")
             Encoding = "UTF-8"
         }));
 });
+
+Task("vs-metrics")
+    .IsDependentOn("Build")
+    .Does(() => {
+        var projects = GetFiles("./WcfService/bin/WcfService.dll");
+        var settings = new VsMetricsSettings()
+        {
+            SuccessFile = true,
+            IgnoreGeneratedCode = true
+        };
+
+        VsMetrics(projects, "./metrics_result.xml", settings);
+    });
 
 Task("Run-Unit-Tests")
     .IsDependentOn("Build")
