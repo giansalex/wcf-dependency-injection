@@ -2,6 +2,7 @@
 #tool "nuget:?package=OpenCover"
 #tool "nuget:?package=ReportGenerator"
 #tool "nuget:?package=ReportUnit"
+// #addin "Cake.CodeAnalysisReporting"
 
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -42,6 +43,11 @@ Task("Clean")
     MSBuild(solutionPath, settings =>
         settings.SetConfiguration(configuration)
         .WithTarget("Clean"));
+    
+    // CreateMsBuildCodeAnalysisReport(
+    //     "./msbuild.log",
+    //     CodeAnalysisReport.MsBuildXmlFileLoggerByAssembly,
+    //     "./msbuild_output.html");
 });
 
 Task("Restore-NuGet-Packages")
@@ -56,7 +62,11 @@ Task("Build")
     .Does(() =>
 {
     MSBuild(solutionPath, settings =>
-        settings.SetConfiguration(configuration));
+        settings.SetConfiguration(configuration)
+        .AddFileLogger(new MSBuildFileLogger
+        {
+            Encoding = "UTF-8"
+        }));
 });
 
 Task("Run-Unit-Tests")
