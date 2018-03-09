@@ -13,5 +13,6 @@ WCF Application Guide
 - Unit Test (Nunit)
 - Mocking  (Moq)
 - Code Coverage (OpenCover)
-- Continuous Intgration (Appveyor)
+- Continuous Integration (Appveyor)
 - Quality Code (Codacy)
+- Build Automation System (cakebuild)
